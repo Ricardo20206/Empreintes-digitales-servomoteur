@@ -1,6 +1,6 @@
 # Lecteur d'empreintes — Arduino Mega + JM-101B + SG90
 
-Système d'identification biométrique avec servomoteur, LEDs et alarme sonore (buzzer).
+Système d'identification biométrique avec servomoteur, LEDs, alarme sonore et **commande Bluetooth** depuis un téléphone Android.
 
 | Composant | Broche / liaison | Rôle |
 |-----------|------------------|------|
@@ -10,28 +10,30 @@ Système d'identification biométrique avec servomoteur, LEDs et alarme sonore (
 | **LED verte** | Pin **6** | Accès autorisé |
 | **LED rouge** | Pin **7** | Accès refusé |
 | **Buzzer** | Pin **8** | Alarme 10 s si empreinte fausse |
+| **HC-05 Bluetooth** | Serial2 (16 / 17) | Commande servo depuis le téléphone |
 
 ---
 
 ## Sommaire
 
 1. [Fonctionnement](#fonctionnement)
-2. [Structure du projet](#structure-du-projet)
-3. [Prérequis logiciels](#prérequis-logiciels)
-4. [Câblage](#câblage)
-5. [Compiler et téléverser](#compiler-et-téléverser)
-6. [Enregistrer des empreintes](#enregistrer-des-empreintes)
-7. [Commandes disponibles](#commandes-disponibles)
-8. [Tester le système](#tester-le-système)
-9. [Dépannage](#dépannage)
-10. [Paramètres modifiables](#paramètres-modifiables)
+2. [Contrôle depuis le téléphone](#contrôle-depuis-le-téléphone)
+3. [Structure du projet](#structure-du-projet)
+4. [Prérequis logiciels](#prérequis-logiciels)
+5. [Câblage](#câblage)
+6. [Compiler et téléverser](#compiler-et-téléverser)
+7. [Enregistrer des empreintes](#enregistrer-des-empreintes)
+8. [Commandes disponibles](#commandes-disponibles)
+9. [Tester le système](#tester-le-système)
+10. [Dépannage](#dépannage)
+11. [Paramètres modifiables](#paramètres-modifiables)
 
 ---
 
 ## Fonctionnement
 
-1. Posez un doigt sur le capteur JM-101B.
-2. Le module capture l'image et la compare à sa mémoire (mode **1:N**).
+1. Posez un doigt sur le capteur JM-101B **ou** envoyez une commande depuis le téléphone / le PC.
+2. Le module capture l'image et la compare à sa mémoire (mode **1:N**), ou exécute la commande reçue.
 3. **Empreinte reconnue** :
    - LED **verte** allumée
    - Servo ouvert à **90°** pendant **5 secondes**
@@ -41,9 +43,45 @@ Système d'identification biométrique avec servomoteur, LEDs et alarme sonore (
    - LED **rouge** allumée
    - **Buzzer** qui siffle pendant **10 secondes**
    - Servo reste fermé
-   - Pendant ces 10 s, une empreinte **correcte** arrête le buzzer et ouvre la porte
+   - Pendant ces 10 s : empreinte **correcte** ou commande **`a`** (téléphone) arrête le buzzer
+5. **Commande téléphone `o`** : servo ouvert (reste ouvert jusqu'à **`f`**)
 
 Les empreintes sont stockées **dans le capteur** (FLASH), pas sur l'Arduino. Elles survivent à un redémarrage ou à un nouveau firmware, tant que la base n'est pas vidée.
+
+---
+
+## Contrôle depuis le téléphone
+
+Guide détaillé : [`docs/BLUETOOTH.md`](docs/BLUETOOTH.md)
+
+### Matériel
+
+- Module **HC-05**
+- Smartphone **Android** (le HC-05 n'est **pas** compatible iPhone)
+- App : **Serial Bluetooth Terminal** (Play Store)
+
+### Câblage HC-05
+
+| HC-05 | Arduino Mega |
+|-------|--------------|
+| VCC | **5V** |
+| GND | **GND** |
+| TX | **Pin 17** (RX2) |
+| RX | **Pin 16** (TX2) |
+
+### Utilisation
+
+1. Téléverser le firmware : `pio run -t upload`
+2. Apparier **HC-05** (PIN souvent **1234** ou **0000**)
+3. Ouvrir Serial Bluetooth Terminal → connecter HC-05
+4. Envoyer (avec retour à la ligne) :
+
+| Commande | Action |
+|----------|--------|
+| `o` ou `ouvrir` | Ouvre le servo (reste ouvert) |
+| `f` ou `fermer` | Ferme le servo |
+| `a` | Arrête le buzzer |
+| `h` | Aide |
 
 ---
 
@@ -51,21 +89,16 @@ Les empreintes sont stockées **dans le capteur** (FLASH), pas sur l'Arduino. El
 
 ```
 Lecteur d'empreintes/
-├── platformio.ini                    # Config PlatformIO (Mega 2560)
-├── src/
-│   └── main.cpp                      # Firmware principal (à téléverser)
-├── firmware/
-│   └── LecteurEmpreintes/
-│       └── LecteurEmpreintes.ino     # Copie compatible Arduino IDE
-├── tools/
-│   ├── serial_cli.py                 # CLI enregistrement / gestion
-│   └── requirements.txt              # pyserial
+├── platformio.ini
+├── src/main.cpp
+├── firmware/LecteurEmpreintes/LecteurEmpreintes.ino
+├── tools/serial_cli.py
 ├── docs/
-│   ├── CABLAGE.md                    # Câblage détaillé
-│   └── schema_cablage_physique.svg   # Schéma visuel
-├── .vscode/
-│   └── tasks.json                    # Tâches Cursor / VS Code
-└── README.md                         # Ce fichier
+│   ├── CABLAGE.md
+│   ├── BLUETOOTH.md              # Contrôle téléphone
+│   └── schema_cablage_physique.svg
+├── .vscode/tasks.json
+└── README.md
 ```
 
 ---
@@ -122,6 +155,9 @@ Schéma visuel : [`docs/schema_cablage_physique.svg`](docs/schema_cablage_physiq
                    Pin 6  ◄── LED verte (+ 220 Ω)
                    Pin 7  ◄── LED rouge (+ 220 Ω)
                    Pin 8  ◄── Buzzer (signal)
+                   Pin 17 ◄── HC-05 TX
+                   Pin 16 ──► HC-05 RX
+                   5V/GND ◄── HC-05 VCC/GND
                    GND    ◄── cathodes LEDs + GND buzzer
 ```
 
@@ -171,6 +207,17 @@ Pattes : longue = anode (+), courte = cathode (−).
 
 Buzzer piezo **passif** recommandé (le firmware utilise `tone()` à 2500 Hz).  
 Buzzer actif 5 V : + → pin 8, − → GND (son continu au lieu d'un sifflement modulé).
+
+### Bluetooth HC-05
+
+| HC-05 | Arduino Mega |
+|-------|--------------|
+| VCC | **5V** |
+| GND | **GND** |
+| TX | **Pin 17** (RX2) |
+| RX | **Pin 16** (TX2) |
+
+Voir [`docs/BLUETOOTH.md`](docs/BLUETOOTH.md).
 
 ### Alimentation recommandée
 
@@ -296,10 +343,16 @@ Ou : **Terminal → Exécuter la tâche… → `Empreinte: Enregistrer`**
 
 | Commande | Action | Exemple |
 |----------|--------|---------|
+| `o` / `ouvrir` | Ouvrir le servo (reste ouvert) | `o` |
+| `f` / `fermer` | Fermer le servo | `f` |
+| `a` | Arrêter le buzzer / alarme | `a` |
 | `e<ID>` | Enregistrer une empreinte | `e1`, `e12` |
 | `d<ID>` | Supprimer une empreinte | `d3` |
 | `l` | Afficher le nombre d'empreintes | `l` |
 | `c` | **Vider toute la base** (irréversible) | `c` |
+| `h` | Aide | `h` |
+
+Ces commandes fonctionnent sur **USB (115200)** et **Bluetooth HC-05 (9600)**.
 
 ### Script Python `tools/serial_cli.py`
 
@@ -355,7 +408,8 @@ Option : `--port COM7` (ou `-p COM7`).
 | Arduino redémarre avec le servo | Alim. 5 V externe pour le servo |
 | LED ne s'allume pas | Polarité (anode = patte longue) + résistance 220 Ω |
 | Buzzer ne sonne pas | Vérifier pin 8 et GND ; buzzer passif préférable |
-| Buzzer ne s'arrête pas avec bonne empreinte | Retéléverser le firmware à jour ; vérifier que l'empreinte est bien enregistrée |
+| Bluetooth : rien ne se passe | Inverser TX/RX HC-05 ; baud 9600 ; appairage OK |
+| iPhone + HC-05 | Non compatible — utiliser Android |
 | `pyserial manquant` | `pip install -r tools/requirements.txt` |
 
 ---
@@ -386,6 +440,7 @@ Puis : `pio run -t upload`.
 |---------|---------|---------|
 | Capteur JM-101B ↔ Mega | **57600** baud | Serial1 : TX1=18, RX1=19 |
 | PC ↔ Mega (USB) | **115200** baud | USB natif |
+| Téléphone ↔ HC-05 ↔ Mega | **9600** baud | Serial2 : TX2=16, RX2=17 |
 
 ---
 

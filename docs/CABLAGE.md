@@ -79,6 +79,13 @@ Option recommandée pour le blanc : le brancher aussi sur **3.3V** (comme le ver
   ───────────────────────                  ───────────────────
   Signal (+) ────────────────────────────► Pin 8
   GND (−)    ────────────────────────────► GND
+
+  HC-05 (Bluetooth)                        ARDUINO MEGA 2560
+  ─────────────────                        ───────────────────
+  VCC   ─────────────────────────────────► 5V
+  GND   ─────────────────────────────────► GND
+  TX    ─────────────────────────────────► Pin 17 (RX2)
+  RX    ──► diviseur 1k+2k (recommandé) ─► Pin 16 (TX2)
 ```
 
 ### LEDs et buzzer
@@ -92,6 +99,31 @@ Option recommandée pour le blanc : le brancher aussi sur **3.3V** (comme le ver
 Chaque LED : **anode** (patte longue) → résistance **220 Ω** → broche Arduino ; **cathode** (patte courte) → **GND**.
 
 Buzzer piezo passif : fil signal → **pin 8**, autre fil → **GND**. (Si buzzer actif à 5 V : + → pin 8, − → GND.)
+
+### Module Bluetooth HC-05
+
+| Broche HC-05 | Arduino Mega | Notes |
+|--------------|--------------|-------|
+| **VCC** | **5V** | Alimentation |
+| **GND** | **GND** | Masse |
+| **TX** | **Pin 17 (RX2)** | HC-05 envoie → Mega reçoit |
+| **RX** | **Pin 16 (TX2)** | Via diviseur de tension recommandé |
+
+**Diviseur de tension** (recommandé sur RX du HC-05, logique 3,3 V) :
+
+```
+  Mega Pin 16 (TX2) ──► 1 kΩ ──┬──► HC-05 RX
+                               │
+                              2 kΩ
+                               │
+                              GND
+```
+
+Sans diviseur, ça marche souvent, mais le module peut chauffer ou vieillir plus vite.
+
+Vitesse série Bluetooth : **9600 baud** (défaut HC-05).
+
+> **iPhone :** le Bluetooth classique (HC-05) n'est **pas** compatible iOS. Utilisez un **Android**, ou un module WiFi (ESP8266) pour iPhone.
 
 ---
 
