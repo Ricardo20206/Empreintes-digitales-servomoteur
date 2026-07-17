@@ -1,0 +1,52 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+
+# Build / IDE
+*.hex
+*.elf
+*.bin
+*.o
+*.a
+*.d
+*.map
+build/
+cmake-build-*/
+
+# VS Code / Cursor (garder tasks et extensions)
+.vscode/*
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.code-workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Logs / temporaires
+*.log
+*.tmp
+*.bak
+*~
+
+# Secrets éventuels
+secrets.json
+credentials.json
+*.pem

@@ -1,0 +1,73 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "fingerprintId",
+      "type": "promptString",
+      "description": "Numero d'empreinte (1-127)",
+      "default": "1"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "Arduino: Compiler",
+      "type": "shell",
+      "command": "pio run",
+      "group": "build",
+      "problemMatcher": ["$platformio"],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Arduino: Televerser",
+      "type": "shell",
+      "command": "pio run -t upload",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$platformio"],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Arduino: Moniteur serie",
+      "type": "shell",
+      "command": "pio device monitor",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Empreinte: Enregistrer",
+      "type": "shell",
+      "command": "python tools/serial_cli.py enregistrer --id ${input:fingerprintId}",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Empreinte: Supprimer",
+      "type": "shell",
+      "command": "python tools/serial_cli.py supprimer --id ${input:fingerprintId}",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Empreinte: Lister",
+      "type": "shell",
+      "command": "python tools/serial_cli.py liste",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Empreinte: Moniteur Python",
+      "type": "shell",
+      "command": "python tools/serial_cli.py monitor",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Setup: Installer dependances Python",
+      "type": "shell",
+      "command": "pip install -r tools/requirements.txt",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    }
+  ]
+}

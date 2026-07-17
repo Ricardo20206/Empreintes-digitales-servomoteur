@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 980" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="megaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e8449"/>
+      <stop offset="100%" stop-color="#145a32"/>
+    </linearGradient>
+    <linearGradient id="sensorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2c3e50"/>
+      <stop offset="100%" stop-color="#1a252f"/>
+    </linearGradient>
+    <linearGradient id="servoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3498db"/>
+      <stop offset="100%" stop-color="#2471a3"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <rect width="1240" height="980" fill="#f4f6f7"/>
+  <text x="620" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">
+    JM-101B ? 6 fils ? C&#226;blage physique corrig&#233;
+  </text>
+  <text x="620" y="65" text-anchor="middle" font-size="13" fill="#7f8c8d">
+    Rouge = masse unique &#160;|&#160; Noir = RX (pas une masse) &#160;|&#160; Blanc/Bleu = optionnels
+  </text>
+
+  <!-- Alerte une seule masse -->
+  <rect x="40" y="82" width="1160" height="52" rx="8" fill="#fdebd0" stroke="#e67e22" stroke-width="2"/>
+  <text x="620" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#d35400">
+    Le fil NOIR n'est PAS une deuxi&#232;me masse ? c'est le RX s&#233;rie (donn&#233;es)
+  </text>
+  <text x="620" y="124" text-anchor="middle" font-size="12" fill="#555">
+    Seul le fil ROUGE va sur GND. Les fils BLANC et BLEU sont pour la d&#233;tection tactile (non requis pour notre firmware).
+  </text>
+
+  <!-- CAPTEUR -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="170" width="250" height="380" rx="8" fill="url(#sensorGrad)" stroke="#111" stroke-width="2"/>
+    <rect x="60" y="190" width="90" height="110" rx="4" fill="#111" stroke="#555"/>
+    <ellipse cx="105" cy="245" rx="32" ry="38" fill="#1a1a1a" stroke="#666"/>
+    <text x="175" y="220" font-size="15" font-weight="bold" fill="#fff">JM-101B</text>
+    <text x="175" y="242" font-size="11" fill="#bdc3c7">6 fils</text>
+    <text x="175" y="260" font-size="11" fill="#bdc3c7">Connecteur JST</text>
+
+    <!-- Connecteur 6 fils -->
+    <rect x="270" y="200" width="20" height="200" rx="3" fill="#444"/>
+    <text x="155" y="570" text-anchor="middle" font-size="11" fill="#555">Ordre connecteur (haut &#8594; bas)</text>
+  </g>
+
+  <!-- Liste 6 fils sur capteur -->
+  <g font-size="12">
+    <rect x="55" y="320" width="220" height="28" rx="4" fill="#e74c3c"/><text x="70" y="338" fill="#fff" font-weight="bold">1. ROUGE</text><text x="160" y="338" fill="#fff">GND (masse)</text>
+    <rect x="55" y="352" width="220" height="28" rx="4" fill="#f1c40f"/><text x="70" y="370" fill="#333" font-weight="bold">2. JAUNE</text><text x="160" y="370" fill="#333">TX (envoie)</text>
+    <rect x="55" y="384" width="220" height="28" rx="4" fill="#ecf0f1" stroke="#bbb"/><text x="70" y="402" fill="#333" font-weight="bold">3. BLANC</text><text x="160" y="402" fill="#666">TouchVin (opt.)</text>
+    <rect x="55" y="416" width="220" height="28" rx="4" fill="#2980b9"/><text x="70" y="434" fill="#fff" font-weight="bold">4. BLEU</text><text x="160" y="434" fill="#fff">Touch (opt.)</text>
+    <rect x="55" y="448" width="220" height="28" rx="4" fill="#27ae60"/><text x="70" y="466" fill="#fff" font-weight="bold">5. VERT</text><text x="160" y="466" fill="#fff">VCC 3,3 V</text>
+    <rect x="55" y="480" width="220" height="28" rx="4" fill="#2c3e50"/><text x="70" y="498" fill="#fff" font-weight="bold">6. NOIR</text><text x="160" y="498" fill="#fff">RX (re&#231;oit)</text>
+  </g>
+
+  <!-- ARDUINO MEGA -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="170" width="400" height="480" rx="8" fill="url(#megaGrad)" stroke="#0e3d1f" stroke-width="3"/>
+    <text x="620" y="200" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">ARDUINO MEGA 2560</text>
+
+    <rect x="435" y="240" width="28" height="360" rx="3" fill="#ecf0f1" stroke="#bdc3c7"/>
+    <circle cx="449" cy="280" r="9" fill="#e74c3c"/><text x="475" y="285" font-size="13" fill="#fff" font-weight="bold">3.3V</text>
+    <circle cx="449" cy="330" r="9" fill="#2c3e50"/><text x="475" y="335" font-size="13" fill="#fff" font-weight="bold">GND</text>
+
+    <rect x="777" y="240" width="28" height="360" rx="3" fill="#ecf0f1" stroke="#bdc3c7"/>
+    <circle cx="791" cy="300" r="9" fill="#f39c12" stroke="#d68910" stroke-width="2"/><text x="815" y="305" font-size="13" fill="#fff" font-weight="bold">Pin 9</text>
+    <circle cx="791" cy="380" r="9" fill="#9b59b6"/><text x="815" y="385" font-size="13" fill="#fff" font-weight="bold">Pin 18 (TX1)</text>
+    <circle cx="791" cy="420" r="9" fill="#9b59b6"/><text x="815" y="425" font-size="13" fill="#fff" font-weight="bold">Pin 19 (RX1)</text>
+
+    <rect x="510" y="260" width="220" height="180" rx="4" fill="#1a1a2e"/>
+    <text x="620" y="360" text-anchor="middle" font-size="13" fill="#888">ATmega2560</text>
+
+    <rect x="530" y="520" width="70" height="40" rx="3" fill="#bdc3c7"/>
+    <text x="565" y="575" text-anchor="middle" font-size="11" fill="#fff">USB</text>
+  </g>
+
+  <!-- SERVO -->
+  <g filter="url(#shadow)">
+    <rect x="920" y="250" width="150" height="90" rx="6" fill="url(#servoGrad)" stroke="#1a5276" stroke-width="2"/>
+    <text x="995" y="290" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">SG90</text>
+    <text x="995" y="310" text-anchor="middle" font-size="10" fill="#d6eaf8">Servo 9g</text>
+    <line x1="960" y1="340" x2="960" y2="370" stroke="#e74c3c" stroke-width="4"/>
+    <line x1="995" y1="340" x2="995" y2="370" stroke="#784212" stroke-width="4"/>
+    <line x1="1030" y1="340" x2="1030" y2="370" stroke="#e67e22" stroke-width="4"/>
+  </g>
+
+  <!-- FILS capteur vers Arduino -->
+  <!-- Vert 3.3V -->
+  <path d="M290 648 C360 648, 380 280, 449 280" fill="none" stroke="#27ae60" stroke-width="5"/>
+  <rect x="310" y="600" width="110" height="24" rx="4" fill="#27ae60"/>
+  <text x="365" y="616" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">VERT &#8594; 3.3V</text>
+
+  <!-- Rouge GND -->
+  <path d="M290 332 C380 332, 400 330, 449 330" fill="none" stroke="#e74c3c" stroke-width="5"/>
+  <rect x="310" y="340" width="110" height="24" rx="4" fill="#e74c3c"/>
+  <text x="365" y="356" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">ROUGE &#8594; GND</text>
+
+  <!-- Jaune TX -> RX1 -->
+  <path d="M290 364 C400 364, 720 420, 791 420" fill="none" stroke="#f1c40f" stroke-width="5"/>
+  <rect x="500" y="400" width="150" height="24" rx="4" fill="#f1c40f"/>
+  <text x="575" y="416" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">JAUNE &#8594; Pin 19 (RX1)</text>
+
+  <!-- Noir RX <- TX1 -->
+  <path d="M290 492 C400 492, 720 380, 791 380" fill="none" stroke="#2c3e50" stroke-width="5"/>
+  <rect x="500" y="358" width="150" height="24" rx="4" fill="#2c3e50"/>
+  <text x="575" y="374" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">NOIR &#8592; Pin 18 (TX1)</text>
+
+  <!-- Blanc optionnel -->
+  <path d="M290 396 C340 396, 360 290, 449 290" fill="none" stroke="#ecf0f1" stroke-width="3" stroke-dasharray="8,5"/>
+  <rect x="55" y="600" width="200" height="40" rx="4" fill="#fff" stroke="#bbb" stroke-dasharray="5,3"/>
+  <text x="155" y="618" text-anchor="middle" font-size="10" fill="#666">BLANC &#8594; 3.3V (optionnel)</text>
+  <text x="155" y="632" text-anchor="middle" font-size="10" fill="#666">BLEU = non connect&#233;</text>
+
+  <!-- Fils servo -->
+  <path d="M960 370 C960 450, 500 450, 449 280" fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="none"/>
+  <path d="M960 370 C960 460, 480 460, 449 330" fill="none" stroke="#784212" stroke-width="4"/>
+  <path d="M1030 370 C1030 440, 820 440, 791 300" fill="none" stroke="#e67e22" stroke-width="4"/>
+  <rect x="860" y="448" width="110" height="22" rx="4" fill="#e67e22"/>
+  <text x="915" y="463" text-anchor="middle" font-size="10" fill="#fff">ORANGE &#8594; Pin 9</text>
+  <rect x="860" y="475" width="110" height="22" rx="4" fill="#e74c3c"/>
+  <text x="915" y="490" text-anchor="middle" font-size="10" fill="#fff">ROUGE &#8594; 5V</text>
+  <rect x="860" y="502" width="110" height="22" rx="4" fill="#784212"/>
+  <text x="915" y="517" text-anchor="middle" font-size="10" fill="#fff">MARRON &#8594; GND</text>
+
+  <!-- Tableau -->
+  <rect x="40" y="680" width="1160" height="270" rx="8" fill="#fff" stroke="#bdc3c7" stroke-width="2"/>
+  <text x="620" y="710" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c3e50">Tableau complet ? 6 fils capteur</text>
+
+  <g font-size="12">
+    <rect x="60" y="725" width="80" height="26" fill="#34495e"/><text x="100" y="742" text-anchor="middle" fill="#fff" font-weight="bold">#</text>
+    <rect x="140" y="725" width="120" height="26" fill="#34495e"/><text x="200" y="742" text-anchor="middle" fill="#fff" font-weight="bold">Couleur</text>
+    <rect x="260" y="725" width="200" height="26" fill="#34495e"/><text x="360" y="742" text-anchor="middle" fill="#fff" font-weight="bold">Fonction</text>
+    <rect x="460" y="725" width="200" height="26" fill="#34495e"/><text x="560" y="742" text-anchor="middle" fill="#fff" font-weight="bold">Arduino Mega</text>
+    <rect x="660" y="725" width="520" height="26" fill="#34495e"/><text x="920" y="742" text-anchor="middle" fill="#fff" font-weight="bold">Note</text>
+
+    <rect x="60" y="751" width="80" height="24" fill="#fdebd0"/><text x="100" y="767" text-anchor="middle">1</text>
+    <rect x="140" y="751" width="120" height="24" fill="#fdebd0"/><text x="200" y="767" text-anchor="middle" font-weight="bold">Rouge</text>
+    <rect x="260" y="751" width="200" height="24" fill="#fdebd0"/><text x="360" y="767" text-anchor="middle">GND ? masse unique</text>
+    <rect x="460" y="751" width="200" height="24" fill="#fdebd0"/><text x="560" y="767" text-anchor="middle" font-weight="bold">GND</text>
+    <rect x="660" y="751" width="520" height="24" fill="#fdebd0"/><text x="920" y="767" text-anchor="middle">Seule masse du capteur</text>
+
+    <rect x="60" y="775" width="80" height="24" fill="#fff"/><text x="100" y="791" text-anchor="middle">2</text>
+    <rect x="140" y="775" width="120" height="24" fill="#fff"/><text x="200" y="791" text-anchor="middle" font-weight="bold">Jaune</text>
+    <rect x="260" y="775" width="200" height="24" fill="#fff"/><text x="360" y="791" text-anchor="middle">TX (module envoie)</text>
+    <rect x="460" y="775" width="200" height="24" fill="#fff"/><text x="560" y="791" text-anchor="middle" font-weight="bold">Pin 19 (RX1)</text>
+    <rect x="660" y="775" width="520" height="24" fill="#fff"/><text x="920" y="791" text-anchor="middle">Obligatoire</text>
+
+    <rect x="60" y="799" width="80" height="24" fill="#f8f9fa"/><text x="100" y="815" text-anchor="middle">3</text>
+    <rect x="140" y="799" width="120" height="24" fill="#f8f9fa"/><text x="200" y="815" text-anchor="middle" font-weight="bold">Blanc</text>
+    <rect x="260" y="799" width="200" height="24" fill="#f8f9fa"/><text x="360" y="815" text-anchor="middle">TouchVin (alim. tactile)</text>
+    <rect x="460" y="799" width="200" height="24" fill="#f8f9fa"/><text x="560" y="815" text-anchor="middle">3.3V ou libre</text>
+    <rect x="660" y="799" width="520" height="24" fill="#f8f9fa"/><text x="920" y="815" text-anchor="middle">Optionnel ? d&#233;tection doigt basse conso.</text>
+
+    <rect x="60" y="823" width="80" height="24" fill="#fff"/><text x="100" y="839" text-anchor="middle">4</text>
+    <rect x="140" y="823" width="120" height="24" fill="#fff"/><text x="200" y="839" text-anchor="middle" font-weight="bold">Bleu</text>
+    <rect x="260" y="823" width="200" height="24" fill="#fff"/><text x="360" y="839" text-anchor="middle">Touch (sortie tactile)</text>
+    <rect x="460" y="823" width="200" height="24" fill="#fff"/><text x="560" y="839" text-anchor="middle">Non connect&#233;</text>
+    <rect x="660" y="823" width="520" height="24" fill="#fff"/><text x="920" y="839" text-anchor="middle">Optionnel ? sortie HIGH quand doigt d&#233;tect&#233;</text>
+
+    <rect x="60" y="847" width="80" height="24" fill="#eafaf1"/><text x="100" y="863" text-anchor="middle">5</text>
+    <rect x="140" y="847" width="120" height="24" fill="#eafaf1"/><text x="200" y="863" text-anchor="middle" font-weight="bold">Vert</text>
+    <rect x="260" y="847" width="200" height="24" fill="#eafaf1"/><text x="360" y="863" text-anchor="middle">VCC 3,3 V</text>
+    <rect x="460" y="847" width="200" height="24" fill="#eafaf1"/><text x="560" y="863" text-anchor="middle" font-weight="bold">3.3V</text>
+    <rect x="660" y="847" width="520" height="24" fill="#eafaf1"/><text x="920" y="863" text-anchor="middle">Obligatoire ? ne pas mettre sur 5 V</text>
+
+    <rect x="60" y="871" width="80" height="24" fill="#fdebd0"/><text x="100" y="887" text-anchor="middle">6</text>
+    <rect x="140" y="871" width="120" height="24" fill="#fdebd0"/><text x="200" y="887" text-anchor="middle" font-weight="bold">Noir</text>
+    <rect x="260" y="871" width="200" height="24" fill="#fdebd0"/><text x="360" y="887" text-anchor="middle">RX (module re&#231;oit)</text>
+    <rect x="460" y="871" width="200" height="24" fill="#fdebd0"/><text x="560" y="887" text-anchor="middle" font-weight="bold">Pin 18 (TX1)</text>
+    <rect x="660" y="871" width="520" height="24" fill="#fdebd0"/><text x="920" y="887" text-anchor="middle" font-weight="bold">PAS une masse ! Obligatoire.</text>
+  </g>
+
+  <text x="620" y="965" text-anchor="middle" font-size="11" fill="#e74c3c" font-weight="bold">
+    D&#233;pannage : si capteur introuvable, inverser JAUNE et NOIR (pas blanc)
+  </text>
+</svg>
